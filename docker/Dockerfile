@@ -100,6 +100,9 @@ RUN make && make install
 ENV OMPI_ALLOW_RUN_AS_ROOT=1
 ENV OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
+ENV PETSC_DIR=/usr/local/petsc-3.16.4
+ENV LD_LIBRARY_PATH=/usr/local/petsc-3.16.4/lib
+
 # Now for GridPACK
 
 WORKDIR /root/develop
