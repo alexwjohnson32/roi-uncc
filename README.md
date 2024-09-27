@@ -15,6 +15,6 @@ The image can be run using :
 ```bash
 docker run --rm -v /ABSOLUTE/PATH/ON/HOST:/ABSOLUTE/PATH/ON/CONTAINER -i -t roi-img /bin/bash
 ```
-This bind a local host directory to a directory in the container and is a good was to persist files between different invocations of this image.
+This binds a local host directory to a directory in the container and is a good way to persist files between different invocations of this image.
 
-The include open source softwares are: HELICS, GridLab-D and GridPACK.
+The included open source softwares are: HELICS, GridLab-D and GridPACK.
