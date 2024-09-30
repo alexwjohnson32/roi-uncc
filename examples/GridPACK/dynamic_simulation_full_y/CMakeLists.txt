@@ -1,110 +1,98 @@
-# -*- mode: cmake -*-
-#
-#     Copyright (c) 2013 Battelle Memorial Institute
-#     Licensed under modified BSD License. A copy of this license can be
-#     found
-#     in the LICENSE file in the top level directory of this distribution.
-#
-# -------------------------------------------------------------
-# file: CMakeLists.install.in
-# -------------------------------------------------------------
-# -------------------------------------------------------------
-# Created January 28, 2014 by William A. Perkins
-# Last Change: 2018-07-17 14:07:40 d3g096
-# -------------------------------------------------------------
-
-cmake_minimum_required(VERSION 2.6.4)
-
-if (NOT GRIDPACK_DIR)
-  set(GRIDPACK_DIR /usr/local/GridPACK
-      CACHE PATH "GridPACK installation directory")
-endif()
-
-include("${GRIDPACK_DIR}/lib/GridPACK.cmake")
-
+cmake_minimum_required(VERSION 3.21)
 project(DynamicSimulation)
 
 enable_language(CXX)
 
-gridpack_setup()
-
-add_definitions(${GRIDPACK_DEFINITIONS})
-include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(BEFORE ${GRIDPACK_INCLUDE_DIRS})
-
 add_executable(dsf.x
-   dsf_main.cpp
-)
+  dsf_main.cpp
+  )
 
-target_link_libraries(dsf.x ${GRIDPACK_LIBS})
+target_include_directories(dsf.x
+  PRIVATE
+  /usr/lib/x86_64-linux-gnu/openmpi/include
+  /usr/local/ga-5.8/include
+  /usr/local/GridPACK/include
+  )
 
-add_custom_target(dsf.x.input
  
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/input_9b3g.xml
-  ${CMAKE_CURRENT_BINARY_DIR}
+ # List of library names
+ set(LIBRARIES_NAMES
+   "mpi"
+   "mpi_cxx"
+   "petsc"
+   "parmetis"
+   "boost_random"
+   "boost_serialization"
+   "boost_mpi"
+   "armci"
+   "ga"
+   "ga++"
+   "gridpack_configuration"
+   "gridpack_math"
+   "gridpack_block_parsers"
+   "gridpack_stream"
+   "gridpack_components"
+   "gridpack_ymatrix_components"
+   "gridpack_pfmatrix_components"
+   "gridpack_partition"
+   "gridpack_parallel"
+   "gridpack_dynamic_simulation_full_y_module"
+   "gridpack_powerflow_module"
+   "gridpack_environment"
+   "gridpack_timer"
+   )
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/9b3g.raw
-  ${CMAKE_CURRENT_BINARY_DIR}
+# Variable to hold the paths of found libraries
+set(LIBRARIES_FOUND)
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/9b3g.dyr
-  ${CMAKE_CURRENT_BINARY_DIR}
+# Step 1: Loop through the list to find each library
+foreach(LIBRARY_NAME IN LISTS LIBRARIES_NAMES)
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/input_145.xml
-  ${CMAKE_CURRENT_BINARY_DIR}
+  find_library(LIBRARY_PATH NAMES ${LIBRARY_NAME}
+    PATHS /usr/local/GridPACK/lib
+    /usr/local/ga-5.8/lib
+    /usr/local/petsc-3.16.4/lib
+    /usr/local/boost-1.78.0/lib
+    /usr/lib/x86_64-linux-gnu/openmpi/lib
+    NO_CACHE
+    NO_DEFAULT_PATH
+    )
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/IEEE_145bus_v23_PSLF.raw
-  ${CMAKE_CURRENT_BINARY_DIR}
+  # Check if the library was found
+  if(NOT LIBRARY_PATH)
+    message(FATAL_ERROR "Library '${LIBRARY_NAME}' could not be found.")
+  endif()
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/IEEE_145b_classical_model.dyr
-  ${CMAKE_CURRENT_BINARY_DIR}
+  # Append the found library path to the LIBRARIES_FOUND list
+  list(INSERT LIBRARIES_FOUND 0  ${LIBRARY_PATH})
+  unset(LIBRARY_PATH)
+endforeach()
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/input_300_cmpld.xml
-  ${CMAKE_CURRENT_BINARY_DIR}
+message(STATUS "All Libraries found: ${LIBRARIES_FOUND}")
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/300bus_v23_no0imp_pslf.raw
-  ${CMAKE_CURRENT_BINARY_DIR}
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/300bus_detail_model_cmpld_combine.dyr
-  ${CMAKE_CURRENT_BINARY_DIR}
+# Step 2: Link all found libraries to the executable
+target_link_libraries(dsf.x PRIVATE ${LIBRARIES_FOUND} )
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/input_3000.xml
-  ${CMAKE_CURRENT_BINARY_DIR}
+# Copy example files
+add_custom_command(
+    TARGET dsf.x POST_BUILD  # Run after the executable is built
+    COMMAND ${CMAKE_COMMAND} -E copy
+        "${CMAKE_SOURCE_DIR}/input_145.xml" "${CMAKE_BINARY_DIR}/input.xml"
+    COMMENT "Copying xml configuration to the build directory"
+    )
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/bus3000_gen_no0imp_v23_pslf.raw
-  ${CMAKE_CURRENT_BINARY_DIR}
+add_custom_command(
+    TARGET dsf.x POST_BUILD  # Run after the executable is built
+    COMMAND ${CMAKE_COMMAND} -E copy
+        "${CMAKE_SOURCE_DIR}/IEEE_145bus_v23_PSLF.raw" "${CMAKE_BINARY_DIR}/IEEE_145bus_v23_PSLF.raw"
+    COMMENT "Copying network file to the build directory"
+    )
 
-  COMMAND ${CMAKE_COMMAND} -E copy 
-  ${CMAKE_CURRENT_SOURCE_DIR}/classical_model_3000bus.dyr
-  ${CMAKE_CURRENT_BINARY_DIR}
-
-  DEPENDS 
-  ${CMAKE_CURRENT_SOURCE_DIR}/input_9b3g.xml
-  ${CMAKE_CURRENT_SOURCE_DIR}/9b3g.raw
-  ${CMAKE_CURRENT_SOURCE_DIR}/9b3g.dyr
-
-  ${CMAKE_CURRENT_SOURCE_DIR}/input_145.xml
-  ${CMAKE_CURRENT_SOURCE_DIR}/IEEE_145bus_v23_PSLF.raw
-  ${CMAKE_CURRENT_SOURCE_DIR}/IEEE_145b_classical_model.dyr
-
-  ${CMAKE_CURRENT_SOURCE_DIR}/input_300_cmpld.xml
-  ${CMAKE_CURRENT_SOURCE_DIR}/300bus_v23_no0imp_pslf.raw
-  ${CMAKE_CURRENT_SOURCE_DIR}/300bus_detail_model_cmpld_combine.dyr
-
-  ${CMAKE_CURRENT_SOURCE_DIR}/input_3000.xml
-  ${CMAKE_CURRENT_SOURCE_DIR}/bus3000_gen_no0imp_v23_pslf.raw
-  ${CMAKE_CURRENT_SOURCE_DIR}/classical_model_3000bus.dyr
-)
-
-add_dependencies(dsf.x dsf.x.input)
+add_custom_command(
+    TARGET dsf.x POST_BUILD  # Run after the executable is built
+    COMMAND ${CMAKE_COMMAND} -E copy
+         "${CMAKE_SOURCE_DIR}/IEEE_145b_classical_model.dyr" "${CMAKE_BINARY_DIR}/IEEE_145b_classical_model.dyr"
+    COMMENT "Copying generator model to the build directory"
+    )
 
