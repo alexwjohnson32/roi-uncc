@@ -50,7 +50,7 @@ WORKDIR /root/develop
 
 # GridPACK dependency: Boost-1.78.0
 
-RUN wget https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz
+RUN wget https://archives.boost.io/release/1.78.0/source/boost_1_78_0.tar.gz
 RUN tar -xvf boost_1_78_0.tar.gz
 RUN rm boost_1_78_0.tar.gz
 
