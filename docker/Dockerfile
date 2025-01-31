@@ -127,6 +127,7 @@ RUN cmake -D GA_DIR:STRING="/usr/local/ga-5.8" \
 		  -D MPIEXEC:STRING='mpiexec' \
 		  -D GRIDPACK_TEST_TIMEOUT:STRING=30 \
 		  -D CMAKE_INSTALL_PREFIX:PATH="/usr/local/GridPACK" \
+		  -D HELICS_INSTALL_DIR:STRING='/usr/local/helics' \ 
 		  -D CMAKE_BUILD_TYPE:STRING=Debug ..
 
 RUN make -j 10 install 
