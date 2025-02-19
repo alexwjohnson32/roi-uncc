@@ -1,0 +1,30 @@
+{
+  "name": "fundamental_integration",
+  "broker": true,
+  "federates": [
+    {
+      "directory": ".",
+      "exec": "python -u pf-full-fed.py",
+      "host": "localhost",
+      "name": "Full PowerFlow"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u pf-left-fed.py",
+      "host": "localhost",
+      "name": "Left PowerFlow"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u pf-right-fed.py",
+      "host": "localhost",
+      "name": "Right PowerFlow"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u visualizer.py",
+      "host": "localhost",
+      "name": "Visualizer"
+    }
+  ]
+}
