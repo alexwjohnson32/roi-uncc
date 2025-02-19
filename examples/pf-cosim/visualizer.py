@@ -48,7 +48,7 @@ def create_value_federate(fedinitstring,name,period,offset):
     h.helicsFederateInfoSetIntegerProperty(fedinfo, h.helics_property_int_log_level, 1)
     h.helicsFederateInfoSetTimeProperty(fedinfo, h.helics_property_time_period, period)
     h.helicsFederateInfoSetTimeProperty(fedinfo,  h.helics_property_time_offset, offset)
-    h.helicsFederateInfoSetFlagOption(fedinfo, h.helics_flag_uninterruptible, False)
+    h.helicsFederateInfoSetFlagOption(fedinfo, h.helics_flag_uninterruptible, True)
     h.helicsFederateInfoSetFlagOption(fedinfo, h.HELICS_FLAG_TERMINATE_ON_ERROR, True)
     h.helicsFederateInfoSetFlagOption(fedinfo, h.helics_flag_wait_for_current_time_update, False)
     fed = h.helicsCreateValueFederate(name, fedinfo)
@@ -83,17 +83,23 @@ if __name__ == "__main__":
                                 h.HELICS_PROPERTY_TIME_PERIOD)
     grantedtime = 0
 
-     # Data collection lists
+    # Data collection lists
     time_sim = []
     Vc_mag_full = []
     Vc_mag= []
 
-    # Labels and title
-    plt.xlabel("Time (seconds)")
-    plt.ylabel("Vc_mag_full (pu)")
-    plt.title("Power Flow")
-
+    # Prepare Plot
     plt.ion()
+    fig, ax = plt.subplots()
+    line1, = ax.plot([], [], 'bo-', label="Vc_mag_Full")   
+    line2, = ax.plot([], [], 'ro-', label="Vc_mag_PYPY") 
+
+    ax.relim()  # Recalculate limits based on new data
+    ax.autoscale_view()  # Autoscale axes
+
+    ax.set_xlabel("Time (seconds)")
+    ax.set_ylabel("Voltage Magnitude (pu)")
+    ax.legend()
     
     # As long as granted time is in the time range to be simulated...
     while grantedtime < total_interval:
@@ -105,18 +111,22 @@ if __name__ == "__main__":
         grantedtime = h.helicsFederateRequestTime (fed, requested_time)
         logger.debug(f'Granted time {grantedtime}')
 
-        if grantedtime<1.0:
-            continue
-
         # Get signals to plot
         time_sim.append(grantedtime)
         Vc_mag_full.append(h.helicsInputGetDouble(Vc_mag_full_id))
         Vc_mag.append(h.helicsInputGetDouble(Vc_mag_id))
 
         # Plot Signals
-        plt.plot(time_sim, Vc_mag_full,time_sim,Vc_mag, color='tab:blue', linestyle='-')
+        line1.set_xdata(time_sim)
+        line1.set_ydata(Vc_mag_full)
+        line2.set_xdata(time_sim)
+        line2.set_ydata(Vc_mag)
 
-        plt.draw()
+        ax.relim()  # Recalculate limits based on new data
+        ax.autoscale_view()  # Autoscale axes
+
+        plt.draw()  # Update the plot
+
 
     # Cleaning up HELICS stuff once we've finished the co-simulation.
     plt.ioff()
