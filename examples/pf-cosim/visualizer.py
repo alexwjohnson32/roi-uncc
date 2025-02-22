@@ -71,6 +71,10 @@ if __name__ == "__main__":
 
     Vc_mag_id = h.helicsFederateRegisterSubscription(fed,'Vc_mag', 'V')
     logger.debug(f'\tRegistered subscription---> Vc_mag')
+
+    Vc_gld_id =  h.helicsFederateRegisterSubscription(fed,'gridlabd_full/Vc_gld', 'V')
+
+    
     
 
     ##############  Entering Execution Mode  ##################################
@@ -115,6 +119,10 @@ if __name__ == "__main__":
         time_sim.append(grantedtime)
         Vc_mag_full.append(h.helicsInputGetDouble(Vc_mag_full_id))
         Vc_mag.append(h.helicsInputGetDouble(Vc_mag_id))
+
+
+        Vc_gld = h.helicsInputGetComplex(Vc_gld_id);
+        logger.debug(f'Voltage from GridLab-D {np.abs(Vc_gld)} {np.degrees(np.angle(Vc_gld))} deg ')
 
         # Plot Signals
         line1.set_xdata(time_sim)

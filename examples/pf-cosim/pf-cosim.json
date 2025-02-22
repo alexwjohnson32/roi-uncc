@@ -1,5 +1,5 @@
 {
-  "name": "fundamental_integration",
+  "name": "PowerFlow_Cosim",
   "broker": true,
   "federates": [
     {
@@ -19,6 +19,12 @@
       "exec": "python -u pf-right-fed.py",
       "host": "localhost",
       "name": "Right PowerFlow"
+    },
+    {
+       "directory" : ".",
+       "exec" : "gridlabd oneline.glm",
+       "host" : "localhost",
+       "name" : "gridlabd_full_fed"
     },
     {
       "directory": ".",
