@@ -73,8 +73,8 @@ if __name__ == "__main__":
     logger.debug(f'\tRegistered subscription---> Vc_mag')
 
     Vc_gld_id =  h.helicsFederateRegisterSubscription(fed,'gridlabd_full/Vc_gld', 'V')
+    Vc_gld_gld_id = h.helicsFederateRegisterSubscription(fed,'gridlabd_left/Vc_left_gld', 'V')
 
-    
     
 
     ##############  Entering Execution Mode  ##################################
@@ -92,6 +92,7 @@ if __name__ == "__main__":
     Vc_mag_full = []
     Vc_mag= []
     Vc_mag_gld = []
+    Vc_mag_gld_gld = []
 
     # Prepare Plot
     plt.ion()
@@ -99,6 +100,7 @@ if __name__ == "__main__":
     line1, = ax.plot([], [], 'bo-', label="Vc_mag_Full")   
     line2, = ax.plot([], [], 'ro-', label="Vc_mag_PYPY")
     line3, = ax.plot([], [], 'go-', label="Vc_mag_gld_Full")
+    line4, = ax.plot([], [], 'mo-', label="Vc_mag_gld_gld")
 
     ax.relim()  # Recalculate limits based on new data
     ax.autoscale_view()  # Autoscale axes
@@ -122,6 +124,7 @@ if __name__ == "__main__":
         Vc_mag_full.append(h.helicsInputGetDouble(Vc_mag_full_id))
         Vc_mag.append(h.helicsInputGetDouble(Vc_mag_id))
         Vc_mag_gld.append(np.abs(h.helicsInputGetComplex(Vc_gld_id))/69000.0);
+        Vc_mag_gld_gld.append(np.abs(h.helicsInputGetComplex(Vc_gld_gld_id))/69000.0);
 
         # Plot Signals
         line1.set_xdata(time_sim)
@@ -130,6 +133,8 @@ if __name__ == "__main__":
         line2.set_ydata(Vc_mag)
         line3.set_xdata(time_sim)
         line3.set_ydata(Vc_mag_gld)
+        line4.set_xdata(time_sim)
+        line4.set_ydata(Vc_mag_gld_gld)
 
         ax.relim()  # Recalculate limits based on new data
         ax.autoscale_view()  # Autoscale axes
