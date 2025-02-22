@@ -83,9 +83,9 @@ if __name__ == "__main__":
                                 h.HELICS_PROPERTY_TIME_PERIOD)
     grantedtime = 0
 
-    r = 0.2
-    x = 0.8
-    ratio = 0.3
+    r = 0.5
+    x = 2.0
+    ratio = 0.5
     
     # As long as granted time is in the time range to be simulated...
     while grantedtime < total_interval:

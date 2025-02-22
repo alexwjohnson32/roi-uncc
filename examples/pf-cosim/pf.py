@@ -51,9 +51,8 @@ def full_powerflow(r,x,ratio):
     }
 
     # Run power flow
-    #ppopt = ppoption(VERBOSE=0, OUT_ALL=0)  # This disables the console output
-    #results, success = runpf(ppc, ppopt)
-    results, success = runpf(ppc)
+    ppopt = ppoption(VERBOSE=0, OUT_ALL=0)  # This disables the console output
+    results, success = runpf(ppc, ppopt)
 
     if success:
         print("Full Network Power Flow Converged!\n")

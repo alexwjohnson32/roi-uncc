@@ -91,12 +91,14 @@ if __name__ == "__main__":
     time_sim = []
     Vc_mag_full = []
     Vc_mag= []
+    Vc_mag_gld = []
 
     # Prepare Plot
     plt.ion()
     fig, ax = plt.subplots()
     line1, = ax.plot([], [], 'bo-', label="Vc_mag_Full")   
-    line2, = ax.plot([], [], 'ro-', label="Vc_mag_PYPY") 
+    line2, = ax.plot([], [], 'ro-', label="Vc_mag_PYPY")
+    line3, = ax.plot([], [], 'go-', label="Vc_mag_gld_Full")
 
     ax.relim()  # Recalculate limits based on new data
     ax.autoscale_view()  # Autoscale axes
@@ -116,19 +118,18 @@ if __name__ == "__main__":
         logger.debug(f'Granted time {grantedtime}')
 
         # Get signals to plot
-        time_sim.append(grantedtime)
+        time_sim.append(grantedtime-0.1)
         Vc_mag_full.append(h.helicsInputGetDouble(Vc_mag_full_id))
         Vc_mag.append(h.helicsInputGetDouble(Vc_mag_id))
-
-
-        Vc_gld = h.helicsInputGetComplex(Vc_gld_id);
-        logger.debug(f'Voltage from GridLab-D {np.abs(Vc_gld)} {np.degrees(np.angle(Vc_gld))} deg ')
+        Vc_mag_gld.append(np.abs(h.helicsInputGetComplex(Vc_gld_id))/69000.0);
 
         # Plot Signals
         line1.set_xdata(time_sim)
         line1.set_ydata(Vc_mag_full)
         line2.set_xdata(time_sim)
         line2.set_ydata(Vc_mag)
+        line3.set_xdata(time_sim)
+        line3.set_ydata(Vc_mag_gld)
 
         ax.relim()  # Recalculate limits based on new data
         ax.autoscale_view()  # Autoscale axes
