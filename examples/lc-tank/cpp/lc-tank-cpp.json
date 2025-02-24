@@ -1,0 +1,19 @@
+{
+  "name": "LC Tank",
+  "broker": true,
+    "federates": [
+	{
+	    "directory" : ".",
+	    "exec" : "./Inductor",
+	    "host" : "localhost",
+	    "name" : "Inductor"
+	},
+
+	{
+	    "directory" : ".",
+	    "exec" : "./Capacitor",
+	    "host" : "localhost",
+	    "name" : "Capacitor"
+	}
+    ]
+}
