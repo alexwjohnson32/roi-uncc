@@ -12,7 +12,6 @@ eshoubak@uncc.edu
 
 import matplotlib.pyplot as plt
 import helics as h
-import pf
 import logging
 import numpy as np
 import os
@@ -74,6 +73,7 @@ if __name__ == "__main__":
 
     Vc_gld_id =  h.helicsFederateRegisterSubscription(fed,'gridlabd_full/Vc_gld', 'V')
     Vc_gld_gld_id = h.helicsFederateRegisterSubscription(fed,'gridlabd_left/Vc_left_gld', 'V')
+    Vc_gpk_gld_id = h.helicsFederateRegisterSubscription(fed,'gpk-left-fed/Vc', 'V')
 
     
 
@@ -93,6 +93,7 @@ if __name__ == "__main__":
     Vc_mag= []
     Vc_mag_gld = []
     Vc_mag_gld_gld = []
+    Vc_mag_gpk_gld = []
 
     # Prepare Plot
     plt.ion()
@@ -101,6 +102,7 @@ if __name__ == "__main__":
     line2, = ax.plot([], [], 'ro-', label="Vc_mag_PYPY")
     line3, = ax.plot([], [], 'go-', label="Vc_mag_gld_Full")
     line4, = ax.plot([], [], 'mo-', label="Vc_mag_gld_gld")
+    line5, = ax.plot([], [], 'co-', label="Vc_mag_gpk_gld")
 
     ax.relim()  # Recalculate limits based on new data
     ax.autoscale_view()  # Autoscale axes
@@ -125,6 +127,7 @@ if __name__ == "__main__":
         Vc_mag.append(h.helicsInputGetDouble(Vc_mag_id))
         Vc_mag_gld.append(np.abs(h.helicsInputGetComplex(Vc_gld_id))/69000.0);
         Vc_mag_gld_gld.append(np.abs(h.helicsInputGetComplex(Vc_gld_gld_id))/69000.0);
+        Vc_mag_gpk_gld.append(np.abs(h.helicsInputGetComplex(Vc_gpk_gld_id))/69000.0);
 
         # Plot Signals
         line1.set_xdata(time_sim)
@@ -135,6 +138,8 @@ if __name__ == "__main__":
         line3.set_ydata(Vc_mag_gld)
         line4.set_xdata(time_sim)
         line4.set_ydata(Vc_mag_gld_gld)
+        line5.set_xdata(time_sim)
+        line5.set_ydata(Vc_mag_gpk_gld)
 
         ax.relim()  # Recalculate limits based on new data
         ax.autoscale_view()  # Autoscale axes

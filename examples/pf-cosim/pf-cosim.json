@@ -3,26 +3,26 @@
     "broker": true,
     "federates": [
 	{
-	    "directory": ".",
+	    "directory": "./pypower",
 	    "exec": "python -u pf-full-fed.py",
 	    "host": "localhost",
 	    "name": "Full PowerFlow"
 	},
 	{
-	    "directory": ".",
+	    "directory": "./pypower",
 	    "exec": "python -u pf-left-fed.py",
 	    "host": "localhost",
 	    "name": "Left PowerFlow"
 	},
 	{
-	    "directory": ".",
+	    "directory": "./pypower",
 	    "exec": "python -u pf-right-fed.py",
 	    "host": "localhost",
 	    "name": "Right PowerFlow"
 	},
 	{
 	    "directory" : ".",
-	    "exec" : "gridlabd oneline.glm",
+	    "exec" : "gridlabd gld/oneline.glm",
 	    "host" : "localhost",
 	    "name" : "gridlabd_full_fed"
 	},
@@ -34,15 +34,28 @@
 	},
 	{
 	    "directory" : ".",
-	    "exec" : "gridlabd left-oneline.glm",
+	    "exec" : "gridlabd gld/left-oneline.glm",
 	    "host" : "localhost",
 	    "name" : "gridlabd_left_fed"
 	},
 	{
 	    "directory" : ".",
-	    "exec" : "gridlabd right-oneline.glm",
+	    "exec" : "gridlabd gld/right-oneline.glm",
 	    "host" : "localhost",
 	    "name" : "gridlabd_right_fed"
+	},
+	{
+	    "directory" : ".",
+	    "exec" : "gridlabd gld/oneline-right-w-gpk.glm",
+	    "host" : "localhost",
+	    "name" : "gpk_gld_right_fed"
+	},
+
+	{
+	    "directory" : ".",
+	    "exec" : "./gpk/build/gpk-left-fed.x",
+	    "host" : "localhost",
+	    "name" : "gpk-left-fed"
 	}
     ]
 }

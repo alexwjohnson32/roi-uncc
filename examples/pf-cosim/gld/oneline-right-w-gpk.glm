@@ -73,6 +73,6 @@ object recorder {
 
 // Connect to HELICS
 object helics_msg {
-    name gridlabd_right;
-    configure gridlabd-right-fed.json;
+    name gpk_gld_right_fed;
+    configure gld/gpk-gld-right-fed.json;
 };

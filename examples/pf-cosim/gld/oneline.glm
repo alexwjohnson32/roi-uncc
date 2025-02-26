@@ -91,5 +91,5 @@ object recorder {
 object helics_msg {
     name gridlabd_full;
     parent center_bus;
-    configure gridlabd-full-fed.json;
+    configure gld/gridlabd-full-fed.json;
 };

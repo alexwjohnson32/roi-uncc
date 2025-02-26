@@ -16,7 +16,7 @@ clock {
 };
 
 // Define the power system base
-object node {
+object meter {
     name slack_bus;
     phases ABCN;
     nominal_voltage 69000;  // 69 kV base voltage
@@ -26,27 +26,19 @@ object node {
     voltage_C 69000.0+120.0d;  // 69 kV, +120°
 };
 
-// Parent of load_bus in this model 
-object meter{
-    name center_bus;
-    phases ABC;
-    nominal_voltage 69000.0;
-}
-
-// Define the load bus (center bus in full powerflow)
+// Define the load bus
 object load {
     name load_bus;
-    parent center_bus;
     phases ABCN;
     nominal_voltage 69000;
-    constant_power_A 0.0+0.0j;
-    constant_power_B 0.0+0.0j;
-    constant_power_C 0.0+0.0j;
+    constant_power_A 20.0e6+15.0e6j;
+    constant_power_B 20.0e6+15.0e6j;
+    constant_power_C 20.0e6+15.0e6j;
 };
 
 // Define transmission line parameters
 object overhead_line {
-    name line_1_2;
+    name line_2_3;
     from slack_bus;
     to load_bus;
     phases ABC;
@@ -68,18 +60,19 @@ object line_configuration {
     z33 0.25+1.0j;
 };
 
+
 // Add a recorder for voltage magnitude and phase at the center bus 
 object recorder {
     name voltage_recorder;
-    parent center_bus;
+    parent slack_bus;
     property measured_voltage_A, measured_power_A, measured_current_A;
     interval 1;  // Record every second
     limit 20;  // Record for 10 seconds
-    file "center_bus_voltage.csv";  // Output file
+    file "gld_cosim_right.csv";  // Output file
 };
 
 // Connect to HELICS
 object helics_msg {
-    name gridlabd_left;
-    configure gridlabd-left-fed.json;
+    name gridlabd_right;
+    configure gld/gridlabd-right-fed.json;
 };
