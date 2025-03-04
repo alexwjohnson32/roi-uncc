@@ -1,0 +1,20 @@
+[2025-03-04 16:42:34.972] [console] [info] IEEE13bus_fed::registering Input 
+[2025-03-04 16:42:34.972] [console] [info] IEEE13bus_fed::registering Input 
+[2025-03-04 16:42:34.972] [console] [info] IEEE13bus_fed::registering Input 
+
+WARNING  [INIT] : Underground_line:30 overhead_line9 - phase N conductor should just be a normal conductor!
+WARNING  [INIT] : The external solver solver_KLU could not be found, defaulting to superLU
+[2025-03-04 16:42:37.091] [console] [debug] IEEE13bus_fed (131073)[initializing]::Granting Initialization
+[2025-03-04 16:42:37.091] [console] [debug] IEEE13bus_fed (131073)[initializing]::Granted Time=-9223372036.854776
+[2025-03-04 16:42:37.092] [console] [debug] IEEE13bus_fed (131073)[executing]::Granting Execution
+[2025-03-04 16:42:37.092] [console] [debug] IEEE13bus_fed (131073)[0]::Granted Time=0
+[2025-03-04 16:42:37.111] [console] [debug] IEEE13bus_fed[0]::setting value for gld_hlc_conn/Sa size 24
+[2025-03-04 16:42:37.111] [console] [debug] IEEE13bus_fed[0]::setting value for gld_hlc_conn/Sb size 24
+[2025-03-04 16:42:37.111] [console] [debug] IEEE13bus_fed[0]::setting value for gld_hlc_conn/Sc size 24
+[2025-03-04 16:42:37.114] [console] [debug] IEEE13bus_fed (131073)[0]::receive PUBLICATION pub:From (131072) handle(3) size 0 at 0 to 131073 from gridpack/Va
+[2025-03-04 16:42:37.114] [console] [debug] IEEE13bus_fed (131073)[0]::receive PUBLICATION pub:From (131072) handle(4) size 0 at 0 to 131073 from gridpack/Vb
+[2025-03-04 16:42:37.114] [console] [debug] IEEE13bus_fed (131073)[0]::receive PUBLICATION pub:From (131072) handle(5) size 0 at 0 to 131073 from gridpack/Vc
+[2025-03-04 16:42:37.114] [console] [debug] IEEE13bus_fed (131073)[1]::Granted Time=1
+[2025-03-04 16:42:37.118] [console] [debug] IEEE13bus_fed[1]::setting value for gld_hlc_conn/Sa size 24
+[2025-03-04 16:42:37.118] [console] [debug] IEEE13bus_fed[1]::setting value for gld_hlc_conn/Sb size 24
+[2025-03-04 16:42:37.118] [console] [debug] IEEE13bus_fed[1]::setting value for gld_hlc_conn/Sc size 24
