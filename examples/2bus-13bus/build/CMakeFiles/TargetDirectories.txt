@@ -1,3 +1,0 @@
-/home/ehab/roi-uncc/2bus-13bus/build/CMakeFiles/gpk-left-fed.x.dir
-/home/ehab/roi-uncc/2bus-13bus/build/CMakeFiles/edit_cache.dir
-/home/ehab/roi-uncc/2bus-13bus/build/CMakeFiles/rebuild_cache.dir
