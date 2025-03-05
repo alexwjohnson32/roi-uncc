@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Configuration>
   <Powerflow>
-    <networkConfiguration> 2bus.raw </networkConfiguration>
+    <networkConfiguration>Tr2bus.raw</networkConfiguration>
     <maxIteration>50</maxIteration>
     <tolerance>1.0e-6</tolerance>
     <!--

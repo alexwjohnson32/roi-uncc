@@ -71,10 +71,12 @@ int main(int argc, char **argv) {
   auto Vb = std::complex<double>(-0.5,-0.866025);
   auto Vc = std::complex<double>(-0.5,0.866025);
 
+  auto r120 = std::complex<double>(-0.5,-0.866025);
+
   // Publish Initial center voltage
-  Va_id.publish(Va*2400.0);
-  Vb_id.publish(Vb*2400.0);
-  Vc_id.publish(Vc*2400.0);
+  Va_id.publish(Va*2401.78);
+  Vb_id.publish(Vb*2401.78);
+  Vc_id.publish(Vc*2401.78);
 
   // Setting up the GridPACK Environement
 
@@ -92,6 +94,10 @@ int main(int argc, char **argv) {
     app_A.execute(argc, argv, Va, Sa);
     app_B.execute(argc, argv, Vb, Sb);
     app_C.execute(argc, argv, Vc, Sc);
+
+    // Rotate Phase A and B Voltages
+    Vb = Vb * r120;
+    Vc = Vc * r120 * r120;
 
     // Log boundary signals
     outFile << "Time (s): "<< grantedtime << "\n";
