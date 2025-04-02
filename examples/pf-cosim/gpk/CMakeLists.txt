@@ -3,17 +3,18 @@ project(PowerFlow)
 
 enable_language(CXX)
 
-add_executable(pf.x
-  pf_main.cpp
+add_executable(gpk-left-fed.x
+  gpk-left-fed.cpp
   pf_app.cpp
   pf_factory.cpp
   )
 
-target_include_directories(pf.x
+target_include_directories(gpk-left-fed.x
   PRIVATE
   /usr/lib/x86_64-linux-gnu/openmpi/include
   /usr/local/ga-5.8/include
   /usr/local/GridPACK/include
+  /usr/local/helics/include
   )
 
  
@@ -42,6 +43,7 @@ target_include_directories(pf.x
    "gridpack_powerflow_module"
    "gridpack_environment"
    "gridpack_timer"
+   "helicscpp"
    )
 
 # Variable to hold the paths of found libraries
@@ -56,6 +58,7 @@ foreach(LIBRARY_NAME IN LISTS LIBRARIES_NAMES)
     /usr/local/petsc-3.16.4/lib
     /usr/local/boost-1.78.0/lib
     /usr/lib/x86_64-linux-gnu/openmpi/lib
+    /usr/local/helics/lib
     NO_CACHE
     NO_DEFAULT_PATH
     )
@@ -74,39 +77,39 @@ message(STATUS "All Libraries found: ${LIBRARIES_FOUND}")
 
 
 # Step 2: Link all found libraries to the executable
-target_link_libraries(pf.x PRIVATE ${LIBRARIES_FOUND} )
+target_link_libraries(gpk-left-fed.x PRIVATE ${LIBRARIES_FOUND} )
 
 # Copy example files
 add_custom_command(
-    TARGET pf.x POST_BUILD  # Run after the executable is built
+    TARGET gpk-left-fed.x POST_BUILD  # Run after the executable is built
     COMMAND ${CMAKE_COMMAND} -E copy
         "${CMAKE_SOURCE_DIR}/input.xml" "${CMAKE_BINARY_DIR}"
     COMMENT "Copying xml configuration to the build directory"
     )
 
 add_custom_command(
-    TARGET pf.x POST_BUILD  # Run after the executable is built
+    TARGET gpk-left-fed.x POST_BUILD  # Run after the executable is built
     COMMAND ${CMAKE_COMMAND} -E copy
         "${CMAKE_SOURCE_DIR}/IEEE14.raw" "${CMAKE_BINARY_DIR}"
     COMMENT "Copying network file to the build directory"
     )
 
 add_custom_command(
-    TARGET pf.x POST_BUILD  # Run after the executable is built
+    TARGET gpk-left-fed.x POST_BUILD  # Run after the executable is built
     COMMAND ${CMAKE_COMMAND} -E copy
          "${CMAKE_SOURCE_DIR}/118.xml" "${CMAKE_BINARY_DIR}"
     COMMENT "118 xml file"
     )
 
 add_custom_command(
-    TARGET pf.x POST_BUILD  # Run after the executable is built
+    TARGET gpk-left-fed.x POST_BUILD  # Run after the executable is built
     COMMAND ${CMAKE_COMMAND} -E copy
          "${CMAKE_SOURCE_DIR}/118.raw" "${CMAKE_BINARY_DIR}"
     COMMENT "118 xml file"
     )
 
 add_custom_command(
-    TARGET pf.x POST_BUILD  # Run after the executable is built
+    TARGET gpk-left-fed.x POST_BUILD  # Run after the executable is built
     COMMAND ${CMAKE_COMMAND} -E copy
          "${CMAKE_SOURCE_DIR}/oneline.raw" "${CMAKE_BINARY_DIR}"
     COMMENT "oneline.raw"

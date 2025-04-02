@@ -10,8 +10,11 @@ RUN apt-get install -y libzmq5-dev libboost-all-dev swig
 RUN git clone --recurse-submodules https://github.com/GMLC-TDC/HELICS.git helics 
 WORKDIR /root/develop/helics
 RUN cmake -DCMAKE_INSTALL_PREFIX=/usr/local/helics \
-		  -DCMAKE_BUILD_TYPE=Release -B build
+      	  -DCMAKE_BUILD_TYPE=Release \
+      	  -DHELICS_BUILD_CXX_SHARED_LIB=ON \
+      	  -B build
 RUN cmake --build build -j -t install
+
 ENV PYTHONPATH=/usr/local/python
 RUN apt-get install -y --no-install-recommends \
 	libboost-filesystem1.74.0 \

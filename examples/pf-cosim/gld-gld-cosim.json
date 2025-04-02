@@ -1,0 +1,19 @@
+{
+  "name": "PowerFlow_GLD_Cosim",
+  "broker": true,
+    "federates": [
+	{
+	    "directory" : ".",
+	    "exec" : "gridlabd gld/left-oneline.glm",
+	    "host" : "localhost",
+	    "name" : "gridlabd_left_fed"
+	},
+
+	{
+	    "directory" : ".",
+	    "exec" : "gridlabd gld/right-oneline.glm",
+	    "host" : "localhost",
+	    "name" : "gridlabd_right_fed"
+	}
+    ]
+}
