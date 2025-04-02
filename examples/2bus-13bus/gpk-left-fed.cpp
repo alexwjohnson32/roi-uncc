@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
   auto Sc_id = gpk_left.registerSubscription("gld_hlc_conn/Sc", "VA");
 
   // File to store simulatio signals
-  std::ofstream outFile("gpk.csv");
+  std::ofstream outFile("outputs/gpk.csv");
 
   // Prepare GridPACK Environement
   gridpack::Environment env(argc,argv);

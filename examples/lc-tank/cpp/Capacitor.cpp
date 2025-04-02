@@ -71,7 +71,7 @@ int main() {
   }
 
   // Write results into CSV file
-  std::ofstream outFile("Capacitor_Voltage.csv");
+  std::ofstream outFile("../outputs/Capacitor_Voltage.csv");
   outFile << "Time (s), Capacitor Voltage (V)\n";
   for (size_t i = 0; i < time_sim.size(); ++i) {
     outFile << time_sim[i] << ", " << voltage[i] << "\n";

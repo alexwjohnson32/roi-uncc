@@ -70,7 +70,7 @@ int main() {
   }
 
   // Write results into CSV file
-  std::ofstream outFile("Inductor_Current.csv");
+  std::ofstream outFile("../outputs/Inductor_Current.csv");
   outFile << "Time (s), Inductor Current (A)\n";
   for (size_t i = 0; i < time_sim.size(); ++i) {
     outFile << time_sim[i] << ", " << current[i] << "\n";

@@ -4,14 +4,14 @@
     "federates": [
 	{
 	    "directory" : ".",
-	    "exec" : "./Inductor",
+	    "exec" : "./build/Inductor",
 	    "host" : "localhost",
 	    "name" : "Inductor"
 	},
 
 	{
 	    "directory" : ".",
-	    "exec" : "./Capacitor",
+	    "exec" : "./build/Capacitor",
 	    "host" : "localhost",
 	    "name" : "Capacitor"
 	}

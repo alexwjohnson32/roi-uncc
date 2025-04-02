@@ -84,7 +84,7 @@ object recorder {
     property measured_voltage_A, measured_power_A, measured_current_A;
     interval 1;  // Record every second
     limit 20;  // Record for 10 seconds
-    file "center_bus_voltage.csv";  // Output file
+    file "outputs/center_bus_voltage.csv";  // Output file
 };
 
 // Connect to HELICS

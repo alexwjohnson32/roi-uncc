@@ -1,0 +1,10 @@
+# Docker and Apptainer
+*.sif
+*.def
+
+# Build directories
+build/
+
+# Logs and output CSV files
+*.log
+outputs/

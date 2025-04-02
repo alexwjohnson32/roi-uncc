@@ -106,7 +106,7 @@ object meter {
     nominal_voltage 400; //7216.88;
     object recorder {
         name substation_recorder;
-        file substation_data.csv;
+        file "outputs/substation_data.csv";
         interval 60;
         property measured_voltage_A, measured_current_A, measured_power_A,measured_voltage_B, measured_current_B, measured_power_B,measured_voltage_C, measured_current_C, measured_power_C;
     };
@@ -154,7 +154,7 @@ object meter {
     nominal_voltage 400; //7216.88;
     object recorder {
         name load_recorder;
-        file load_data.csv;
+        file "outputs/load_data.csv";
         interval 60;
         property measured_voltage_A, measured_current_A, measured_power_A,measured_voltage_B, measured_current_B, measured_power_B,measured_voltage_C, measured_current_C, measured_power_C;    };
 }
@@ -169,7 +169,7 @@ object switch {
     //status sw_status;  // Apply the schedule
     object recorder {
         name sw_recorder;
-        file sw_data.csv;
+        file "outputs/sw_data.csv";
         interval 60;
         property status;
     };
